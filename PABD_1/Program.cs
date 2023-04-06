@@ -31,8 +31,9 @@ namespace Inser_and_Get_Data
                         case 'K':
                             {
                                 SqlConnection conn = null;
-                                string strKoneksi = "Data source = DESKTOP-QB0MM9G; " +
-                                    "initial catalog = HOTEL; " + "User ID = admin01; password = 123";
+                                string strKoneksi = "Data source = DESKTOP\\QB0MM9G; " +
+                                    "initial catalog = {0};" + 
+                                    "User ID = {1}; password = {2}";
                                 conn = new SqlConnection(string.Format(strKoneksi, db, user, pass));
                                 conn.Open();
                                 Console.Clear();
@@ -59,20 +60,24 @@ namespace Inser_and_Get_Data
                                             case '2':
                                                 {
                                                     Console.Clear();
-                                                    Console.WriteLine("INPUT DATA MAHASISWA\n");
-                                                    Console.WriteLine("Masukkan NIM : ");
-                                                    string NIM = Console.ReadLine();
-                                                    Console.WriteLine("Masukkan Namah Mahasiswa : ");
-                                                    string NmaMhs = Console.ReadLine();
-                                                    Console.WriteLine("Masukkan Alamat Mahasiswa : ");
-                                                    string Almt = Console.ReadLine();
-                                                    Console.WriteLine("Masukkan Jenis Kelamin (L/P)");
-                                                    string jk = Console.ReadLine();
-                                                    Console.WriteLine("Masukkan No Telpon :");
-                                                    string notlp = Console.ReadLine();
+                                                    Console.WriteLine("INPUT DATA TAMU\n");
+                                                    Console.WriteLine("Masukkan Nomor Induk Tamu : ");
+                                                    string No_induk = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Nama Tamu : ");
+                                                    string Nama_tamu = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Alamat Tamu : ");
+                                                    string alamat = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Kota : ");
+                                                    string Kota = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Provinsi : ");
+                                                    string provinsi = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Nomor HP : ");
+                                                    string no_hp = Console.ReadLine();
+                                                    Console.WriteLine("Masukkan Email : ");
+                                                    string Email = Console.ReadLine();
                                                     try
                                                     {
-                                                        pr.insert(NIM, NmaMhs, Almt, jk, notlp, conn);
+                                                        pr.insert(No_induk, Nama_tamu, alamat, Kota, provinsi,no_hp,Email, conn);
                                                     }
                                                     catch
                                                     {
@@ -119,7 +124,7 @@ namespace Inser_and_Get_Data
 
         public void baca(SqlConnection con)
         {
-            SqlCommand cmd = new SqlCommand("Select * From HRD.Mahasiswa", con);
+            SqlCommand cmd = new SqlCommand("Select * From dbo.tamu", con);
             SqlDataReader r = cmd.ExecuteReader();
             while (r.Read())
             {
@@ -131,20 +136,22 @@ namespace Inser_and_Get_Data
             }
             r.Close();
         }
-        public void insert(string NIM, string NmaMhs, string Almt, string jk, string notlpn,
+        public void insert(string No_Induk, string Nama_Tamu, string Almt, string kota, string provinsi, string no_hp, string email,
             SqlConnection con)
         {
             string str = "";
-            str = "insert into HRD.MAHASISWA (NIM, NamaMhs, AlamatMhs, Sex, PhoneMhs)"
-                + " values (@nim, @nma, @alamat, @JK, @Phn)";
+            str = "insert into dbo.Tamu (No_Induk, Nama_Tamu, Alamat, kota, provinsi, NO_HP, Email)"
+                + " values (@No_Induk, @Nama_Tamu, @Alamat, @Kota, @provinsi,@NO_HP,@email)";
             SqlCommand cmd = new SqlCommand(str, con);
             cmd.CommandType = CommandType.Text;
 
-            cmd.Parameters.Add(new SqlParameter("nim", NIM));
-            cmd.Parameters.Add(new SqlParameter("nma", NmaMhs));
-            cmd.Parameters.Add(new SqlParameter("alamat", Almt));
-            cmd.Parameters.Add(new SqlParameter("JK", jk));
-            cmd.Parameters.Add(new SqlParameter("Phn", notlpn));
+            cmd.Parameters.Add(new SqlParameter("No_Induk", No_Induk));
+            cmd.Parameters.Add(new SqlParameter("Nama_Tamu", Nama_Tamu));
+            cmd.Parameters.Add(new SqlParameter("Alamat", Almt));
+            cmd.Parameters.Add(new SqlParameter("Kota", kota));
+            cmd.Parameters.Add(new SqlParameter("provinsi", provinsi));
+            cmd.Parameters.Add(new SqlParameter("NO_HP", no_hp));
+            cmd.Parameters.Add(new SqlParameter("email", email));
             cmd.ExecuteNonQuery();
             Console.WriteLine("Data Berhasil Ditambahkan");
         }
