@@ -32,7 +32,7 @@ namespace Inser_and_Get_Data
                             {
                                 SqlConnection conn = null;
                                 string strKoneksi = "Data source = DESKTOP-QB0MM9G; " +
-                                    "initial catalog = {0}; " + "User ID = {1}; password = {2}";
+                                    "initial catalog = HOTEL; " + "User ID = admin01; password = 123";
                                 conn = new SqlConnection(string.Format(strKoneksi, db, user, pass));
                                 conn.Open();
                                 Console.Clear();
