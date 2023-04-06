@@ -52,7 +52,7 @@ namespace Inser_and_Get_Data
                                             case '1':
                                                 {
                                                     Console.Clear();
-                                                    Console.WriteLine("DATA MAHASISWA\n");
+                                                    Console.WriteLine("DATA TAMU\n");
                                                     Console.WriteLine();
                                                     pr.baca(conn);
                                                 }
